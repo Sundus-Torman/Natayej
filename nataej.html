@@ -6867,8 +6867,11 @@
       let student = students.find(s => s.phone === phone);
 
       // If no exact match, try partial match
+      // if (!student) {
+      //   student = students.find(s => phone.includes(s.phone));
+      // }
       if (!student) {
-        student = students.find(s => phone.includes(s.phone));
+        student = students.find(s => s.phone.length >= 5 && phone.includes(s.phone));
       }
 
       if (student) {
