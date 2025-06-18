@@ -20,10 +20,15 @@
     }
 
     .header-banner img {
+      /* width: 100%;
+      display: block;
+      margin: 0; */
       width: 100%;
       display: block;
       margin: 0;
+
     }
+
 
     .content {
       max-width: 700px;
@@ -151,14 +156,19 @@
 <body>
 
   <div class="header-banner">
-    <img src="lala.jpg" alt="تأهيل النحو" height="290">
+    <img src="main_photo3.jpg" alt="تأهيل النحو" height="290">
   </div>
 
   <div class="content">
     <h2>🔍 الاستعلام عن علامات الطالب</h2>
 
     <div class="centered-section">
-      <label for="phone">أدخل رقم هاتفك</label>
+      <!-- <label for="phone">أدخل رقم هاتفك (الذي تدخله في الاختبار)</label> -->
+      <label for="phone">
+        أدخل رقم هاتفك 
+        <span style="font-size: 0.7em;">(الذي تدخله في الاختبار)</span>
+      </label>
+
       <input type="text" id="phone" placeholder="مثال: 96277xxxxxxx">
       <button onclick="checkPhone()">تأكيد</button>
     </div>
@@ -6847,6 +6857,28 @@
     //     emailDiv.style.display = "block";
     //   }
     // }
+    // function checkPhone() {
+    //   const phone = document.getElementById("phone").value.trim();
+    //   const resultDiv = document.getElementById("result");
+    //   const gradesDiv = document.getElementById("grades");
+    //   const emailDiv = document.getElementById("emailInput");
+    //   gradesDiv.innerHTML = "";
+    //   resultDiv.innerHTML = "";
+    //   emailDiv.style.display = "none";
+
+    //   const student = students.find(s => phone.includes(s.phone));
+    //   if (student) {
+    //     resultDiv.innerHTML = `
+    //       <p>هل اسمك <strong>${student.name}</strong>؟</p>
+    //       <div class="button-group">
+    //         <button onclick="showGrades('${student.phone}')">نعم</button>
+    //         <button onclick="showEmailInput()">لا</button>
+    //       </div>`;
+    //   } else {
+    //     resultDiv.innerHTML = "لم يتم العثور على رقم الهاتف. جرب البريد الإلكتروني.";
+    //     emailDiv.style.display = "block";
+    //   }
+    // }
     function checkPhone() {
       const phone = document.getElementById("phone").value.trim();
       const resultDiv = document.getElementById("result");
@@ -6856,7 +6888,14 @@
       resultDiv.innerHTML = "";
       emailDiv.style.display = "none";
 
-      const student = students.find(s => phone.includes(s.phone));
+      // First: Try exact match
+      let student = students.find(s => s.phone === phone);
+
+      // If no exact match, try partial match
+      if (!student) {
+        student = students.find(s => phone.includes(s.phone));
+      }
+
       if (student) {
         resultDiv.innerHTML = `
           <p>هل اسمك <strong>${student.name}</strong>؟</p>
